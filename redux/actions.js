@@ -17,8 +17,8 @@ const initialState = {
 export default handleActions(
   {
     [UPDATE_NAME]: (state) => state,
-    [UPDATE_NAME_SUCCESS]: ({ payload }) => ({
-      name: payload,
+    [UPDATE_NAME_SUCCESS]: (state, { payload }) => ({
+      name: payload.name,
     }),
   },
 

@@ -1,8 +1,9 @@
 import { all, put, takeLatest } from "redux-saga/effects";
 import * as reduxModule from "./actions";
 
-function* updateNameSaga(payload) {
-  yield put(reduxModule.updateNameSuccess(payload));
+function* updateNameSaga({ payload }) {
+  const { name } = payload;
+  yield put(reduxModule.updateNameSuccess({ name }));
 }
 
 const defaultSagas = [takeLatest(reduxModule.UPDATE_NAME, updateNameSaga)];

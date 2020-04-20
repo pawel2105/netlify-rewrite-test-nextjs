@@ -12,64 +12,66 @@ const Label = styled.label`
   margin-bottom: 5px;
 `;
 
-const TextInput = ({ label, children }) => {
+const TextInput = ({ label, field, children, ...rest }) => {
   return (
     <div>
       <Label>{label}</Label>
       {children}
-      <input />
+      <input {...field} {...rest} />
     </div>
   );
 };
 
-const Index = (props) => {
-  return (
-    <div className="container">
-      <Link href="/about" as="/about">
-        <a>About</a>
-      </Link>
-      <br />
-      <Link href="/users/[id]" as="/users/1">
-        <a>User 1</a>
-      </Link>
-      <br />
-      <Link href="/users/[id]" as="/users/2">
-        <a>User 2</a>
-      </Link>
-      <br />
-      <br />
-      Hello {props.name}
-      <br />
-      <br />
-      <Formik
-        initialValues={{ name: props.name || "" }}
-        onSubmit={(values) => props.updateName(values)}
-      >
-        {({ handleSubmit, values }) => (
-          <form onSubmit={handleSubmit}>
-            <Field
-              label="name"
-              name="name"
-              placeholder="name"
-              value={values.name}
-              component={TextInput}
-            />
+class Index extends React.Component {
+  render() {
+    return (
+      <div className="container">
+        <Link href="/about" as="/about">
+          <a>About</a>
+        </Link>
+        <br />
+        <Link href="/users/[id]" as="/users/1">
+          <a>User 1</a>
+        </Link>
+        <br />
+        <Link href="/users/[id]" as="/users/2">
+          <a>User 2</a>
+        </Link>
+        <br />
+        <br />
+        Hello {this.props.name}
+        <br />
+        <br />
+        <Formik
+          initialValues={{ name: this.props.name || "" }}
+          onSubmit={(values) => this.props.updateName(values)}
+        >
+          {({ handleSubmit, values }) => (
+            <form onSubmit={handleSubmit}>
+              <Field
+                label="name"
+                name="name"
+                placeholder="name"
+                value={values.name}
+                component={TextInput}
+              />
 
-            <button onClick={handleSubmit} type="submit">
-              submit
-            </button>
-          </form>
-        )}
-      </Formik>
-    </div>
-  );
-};
+              <button onClick={handleSubmit} type="submit">
+                submit
+              </button>
+            </form>
+          )}
+        </Formik>
+      </div>
+    );
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   updateName: (values) => dispatch(usersModule.updateName(values)),
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ state }) => {
   return { name: state.name };
 };
 
