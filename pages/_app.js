@@ -1,6 +1,4 @@
-import App from "next/app";
 import Router from "next/router";
-import React from "react";
 import { Provider } from "react-redux";
 import NProgress from "nprogress";
 import withRedux from "next-redux-wrapper";
@@ -16,18 +14,15 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
-class MyApp extends App {
-  render() {
-    const { store, ...rest } = this.props;
-    const { Component } = rest;
+const MyApp = ({ store, ...rest }) => {
+  const { Component } = rest;
 
-    return (
-      <Provider store={store}>
-        <Component {...rest} />
-        <GlobalStyles />
-      </Provider>
-    );
-  }
-}
+  return (
+    <Provider store={store}>
+      <Component {...rest} />
+      <GlobalStyles />
+    </Provider>
+  );
+};
 
 export default withRedux(createStore)(withReduxSaga(MyApp));
